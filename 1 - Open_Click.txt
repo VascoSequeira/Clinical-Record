@@ -1,0 +1,32 @@
+ private void Open_Click(object sender, EventArgs e)
+        {
+            filepath = "\\\\path\\Histórico Clinico.xlsx";
+            sheet = "Sheet1";
+            Excel abrir = new Excel(filepath, sheet);
+
+            string[,] matriz = abrir.ReadRangeCell(1, 1, 172, 8);
+            dataGridView2.Rows.Clear();
+
+            for (int i = 1; i < matriz.GetLength(0); i++)
+            {
+                string[] row = new string[matriz.GetLength(1)];
+
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    if (matriz[i, j] != null)
+                    {
+                        row[j] = matriz[i, j];
+                        comparar[i, j] = matriz[i, j];
+                    }
+                    else
+                    {
+                        row[j] = "";
+                        comparar[i, j] = "";
+                    }
+                }
+
+                dataGridView2.Rows.Add(row);
+            }
+            abrir.Close();
+            buttonAdd.Enabled = true;
+        }

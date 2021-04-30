@@ -1,0 +1,40 @@
+ private void buttonFiltrar_Click(object sender, EventArgs e)
+        {
+            for (int i = 1; i < comparar.GetLength(0); i++)
+            {
+                string[] row = new string[comparar.GetLength(1)];
+                if (comparar[i, 1] != null & comparar[i, 1] != "")
+                {
+                    if (Int32.Parse(comparar[i, 1]) == Int32.Parse(textBoxNIM.Text))
+                    {
+                        dataGridView2.Rows.Clear();
+                        for (int j = 0; j < comparar.GetLength(1); j++)
+                        {
+                            if (comparar[i, j] != null)
+                            {
+                                row[j] = comparar[i, j];
+                            }
+                            else
+                            {
+                                row[j] = "";
+                            }
+                        }
+                        dataGridView2.Rows.Add(row);
+                        buttonAdd.Enabled = false;
+                        break;
+                    }
+                    else
+                    {
+                        dataGridView2.Rows.Clear();
+                        buttonAdd.Enabled = false;
+                    }
+
+                }
+                else
+                {
+                    dataGridView2.Rows.Clear();
+                    buttonAdd.Enabled = false;
+                }
+
+            }
+        }

@@ -1,0 +1,54 @@
+ private void button1_Click(object sender, EventArgs e)
+        {
+            /*Inicialização Documento Word */
+            Word wordfile = new Word(wordpath);
+            wordfile.Clear();
+            wordfile.InsertImage();
+
+
+            /*Texto a escrever no Word*/
+            string escrever = "Histórico Clinico\n\n";
+            string[,] cache = new string[dataGridView2.Rows.Count, dataGridView2.Columns.Count];
+
+
+            //escrever dataGried para cache
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                foreach (DataGridViewColumn col in dataGridView2.Columns)
+                {
+                    if (dataGridView2.Rows[row.Index].Cells[col.Index].Value != null)
+                    {
+                        cache[row.Index, col.Index] = dataGridView2.Rows[row.Index].Cells[col.Index].Value.ToString();
+                    }
+                    else
+                    {
+                        cache[row.Index, col.Index] = "";
+                    }
+                }
+            }
+
+            for (int i = 0; i < cache.GetLength(0); i++)
+            {
+                if (cache[i, 0] != "" & cache[i, 0] != null)
+                {
+                    escrever = escrever + "Nome: " + cache[i, 0] + "\n" + " NIM: " + cache[i, 1] + "\n" + " Antecedentes Familiares: " + cache[i, 2] + "\n" + " Medicação Habitual: " + cache[i, 3] + "\n" + " Alergias: " + cache[i, 4] + "\n" + " Hábitos Tabágicos/Alcoolicos: " + cache[i, 5] + "\n" + " Antecedentes Pessoais: " + cache[i, 6] + "\n\n";
+                }
+            }
+
+            wordfile.WritetoWord(escrever);
+
+            //assinatura 
+            string assinatura = "";
+            assinatura = comboBoxAss.Text;
+            if (assinatura == null)
+            {
+                MessageBox.Show("Adicionar Assinatura!");
+            }
+            else
+            {
+                wordfile.Assinatura(assinatura);
+            }
+
+
+            wordfile.Close();
+        }
